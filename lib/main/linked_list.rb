@@ -5,6 +5,15 @@ class LinkedList
 
   def append(value)
     # adds a new node containing value to the end of the list
+    if @head.nil?
+      @head = Node.new(value)
+    else
+      current = @head
+      while current.next_node !=nil
+        current = current.next_node
+      end
+      current.next_node = Node.new(value)
+    end
   end
 
   def prepend(value)
@@ -19,6 +28,7 @@ class LinkedList
     #  returns the first node in the list
   end
 
+  def tail
   # returns the last node in the list
   end
 
