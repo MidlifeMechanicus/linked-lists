@@ -7,14 +7,14 @@ list.append(1)
 
 list.append(2)
 
-p list
+list.prepend(0)
 
-list.prepend(3)
-
-p list
-
-list.append(4)
+list.append(3)
 
 p list
 
 list.size
+
+list.at(2)
+
+list.at(10)

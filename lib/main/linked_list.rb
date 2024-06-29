@@ -59,7 +59,22 @@ class LinkedList
 
   def at(index)
     # returns the node at the given index
-    # will need index attribute and updating method
+    unless @head.nil?
+      index_valid = true
+      i = 0
+      node = @head
+      until i == index
+        if node.next_node.nil?
+          puts "No such node"
+          index_valid = false
+          break
+        else
+          node = node.next_node
+          i += 1
+        end
+      end
+      puts node.value unless index_valid == false
+    end
   end
 
   def pop
