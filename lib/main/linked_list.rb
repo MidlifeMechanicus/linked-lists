@@ -8,11 +8,9 @@ class LinkedList
     if @head.nil?
       @head = Node.new(value)
     else
-      current = @head
-      while current.next_node != nil
-        current = current.next_node
-      end
-      current.next_node = Node.new(value)
+      current_link = @head
+      current_link = current_link.next_node until current_link.next_node.nil?
+      current_link.next_node = Node.new(value)
     end
   end
 
@@ -21,9 +19,9 @@ class LinkedList
     if @head.nil?
       @head = Node.new(value)
     else
-      current = @head
+      current_link = @head
       @head = Node.new(value)
-      @head.next_node = current
+      @head.next_node = current_link
     end
   end
 
@@ -31,29 +29,29 @@ class LinkedList
     # returns the total number of nodes in the list
     size = 0
     unless @head.nil?
-      current = @head
+      current_link = @head
       size = 1
-      while current.next_node != nil
-        current = current.next_node
+      until current_link.next_node.nil?
+        current_link = current_link.next_node
         size += 1
       end
     end
-    puts size
+    size
   end
 
   def head
     #  returns the first node in the list
-    puts @head.value unless @head.nil?
+    @head.nil? ? @head : @head.value
   end
 
   def tail
   # returns the last node in the list
     unless @head.nil?
-      node = @head
-      until node.next_node.nil?
-        node = node.next_node
+      current_link = @head
+      until current_link.next_node.nil?
+        current_link = current_link.next_node
       end
-      puts node.value
+      current_link.value
     end
   end
 
@@ -62,18 +60,17 @@ class LinkedList
     unless @head.nil?
       index_valid = true
       i = 0
-      node = @head
+      current_link = @head
       until i == index
-        if node.next_node.nil?
-          puts "No such node"
+        if current_link.next_node.nil?
           index_valid = false
           break
         else
-          node = node.next_node
+          current_link = current_link.next_node
           i += 1
         end
       end
-      puts node.value unless index_valid == false
+      current_link.value unless index_valid == false
     end
   end
 
@@ -139,18 +136,18 @@ class LinkedList
   end
 
   def to_s
-    # represent your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+    # represent your LinkedList objects as strings, so you can print them out and preview them in the console.
+    # The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+    string = ""
     unless @head.nil?
       node = @head
       string = "( #{node.value} ) -> "
       until node.next_node.nil?
-        string = string + "( #{node.next_node.value} ) -> "
+        string += "( #{node.next_node.value} ) -> "
         node = node.next_node
-        # need a better loop condition so that we don't need to bodge aronud final entry
       end
-      string = string + "nil"
-      puts string
     end
+    string + "nil"
   end
 
   # Extra credit
@@ -177,6 +174,25 @@ class LinkedList
 
   def remove_at(index)
     # removes the node at the given index
+    unless @head.nil?
+      index_valid = true
+      i = 0
+      prior_node = @head
+      pop_node = @head.next_node
+      until i == index
+        if pop_node.next_node.nil?
+          puts "No such node"
+          index_valid = false
+          break
+        else
+          prior_node = prior_node.next_node
+          pop_node = pop_node.next_node
+          i += 1
+        end
+      end
+      preceeding_node = pop_node.next_node
+      prior_node.next_node = preceeding_node unless index_valid == false
+    end
   end
 
 end
