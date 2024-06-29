@@ -45,49 +45,47 @@ class LinkedList
   end
 
   def tail
-  # returns the last node in the list
-    unless @head.nil?
-      current_link = @head
-      until current_link.next_node.nil?
-        current_link = current_link.next_node
-      end
-      current_link.value
-    end
+    # returns the last node in the list
+    return if @head.nil?
+
+    current_link = @head
+    current_link = current_link.next_node until current_link.next_node.nil?
+    current_link.value
   end
 
   def at(index)
     # returns the node at the given index
-    unless @head.nil?
-      index_valid = true
-      i = 0
-      current_link = @head
-      until i == index
-        if current_link.next_node.nil?
-          index_valid = false
-          break
-        else
-          current_link = current_link.next_node
-          i += 1
-        end
+    return if @head.nil?
+
+    index_valid = true
+    i = 0
+    current_link = @head
+    until i == index
+      if current_link.next_node.nil?
+        index_valid = false
+        break
+      else
+        current_link = current_link.next_node
+        i += 1
       end
-      current_link.value unless index_valid == false
     end
+    current_link.value unless index_valid == false
   end
 
   def pop
     #  removes the last element from the list
-    unless @head.nil?
-      if @head.next_node.nil?
-        @head = nil
-      else
-        previous_link = @head
-        pop_link = @head.next_node
-        until pop_link.next_node.nil?
-          previous_link = previous_link.next_node
-          pop_link = pop_link.next_node
-        end
-        previous_link.next_node = nil
+    return if @head.nil?
+
+    if @head.next_node.nil?
+      @head = nil
+    else
+      previous_link = @head
+      pop_link = @head.next_node
+      until pop_link.next_node.nil?
+        previous_link = previous_link.next_node
+        pop_link = pop_link.next_node
       end
+      previous_link.next_node = nil
     end
   end
 
@@ -117,7 +115,7 @@ class LinkedList
     until current_link.nil?
       found_value = true if current_link.value == value
       current_link = current_link.next_node
-      index +=1 unless found_value
+      index += 1 unless found_value
     end
     index if found_value
     # I really wanted to find a way to include the last link in the Until loop. Credit to Harmolipi for this one.
@@ -142,11 +140,12 @@ class LinkedList
 
   def insert_at(value, index)
     # inserts a new node with the provided value at the given index
-    return puts 'Selected index does not exist' if index > self.size
+    return puts "Selected index does not exist" if index > size
+
     if index.zero?
-      self.prepend(value)
-    elsif index == self.size
-      self.append(value)
+      prepend(value)
+    elsif index == size
+      append(value)
     else
       previous_link = @head
       insert_link = @head.next_node
@@ -165,9 +164,10 @@ class LinkedList
 
   def remove_at(index)
     # removes the node at the given index
-    return puts 'Selected index does not exist' if index + 1 > self.size
-    if index + 1 == self.size
-      self.pop
+    return puts "Selected index does not exist" if index + 1 > size
+
+    if index + 1 == size
+      pop
     elsif index.zero?
       @head = @head.next_node
     else
