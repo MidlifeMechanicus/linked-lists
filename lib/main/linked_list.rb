@@ -80,15 +80,13 @@ class LinkedList
       if @head.next_node.nil?
         @head = nil
       else
-        prior = @head
-        node = @head.next_node
-        while node.next_node != nil
-          prior = prior.next_node
-          node = node.next_node
+        previous_link = @head
+        pop_link = @head.next_node
+        until pop_link.next_node.nil?
+          previous_link = previous_link.next_node
+          pop_link = pop_link.next_node
         end
-        prior.next_node = nil
-        # Refactor with node and pop_node?
-        # need pop statement?
+        previous_link.next_node = nil
       end
     end
   end
@@ -97,42 +95,32 @@ class LinkedList
     #  returns true if the passed in value is in the list and otherwise returns false. returns true if the passed in value is in the list and otherwise returns false.
     contains_valid = false
     unless @head.nil?
-      node = @head
-      until node.next_node.nil?
-        if node.value == value
+      current_link = @head
+      until current_link.next_node.nil?
+        if current_link.value == value
           contains_valid = true
           break
         else
-          node = node.next_node
+          current_link = current_link.next_node
         end
+        contains_valid = true if current_link.value == value
       end
     end
-    puts contains_valid
-    # refactor puts to returns?
+    contains_valid
   end
 
   def find(value)
     # returns the index of the node containing value, or nil if not found.
-    contains_valid = false
-    i = 0
-    unless @head.nil?
-      node = @head
-      until node.next_node.nil?
-        if node.value == value
-          contains_valid = true
-          break
-        else
-          node = node.next_node
-          i += 1
-        end
-      end
+    current_link = @head
+    index = 0
+    found_value = false
+    until current_link.nil?
+      found_value = true if current_link.value == value
+      current_link = current_link.next_node
+      index +=1 unless found_value
     end
-    if contains_valid == true
-      puts i
-    else
-      puts "nil"
-    end
-    # review ruby ternary operators
+    index if found_value
+    # I really wanted to find a way to include the last link in the Until loop. Credit to Harmolipi for this one.
   end
 
   def to_s
@@ -140,11 +128,11 @@ class LinkedList
     # The format should be: ( value ) -> ( value ) -> ( value ) -> nil
     string = ""
     unless @head.nil?
-      node = @head
-      string = "( #{node.value} ) -> "
-      until node.next_node.nil?
-        string += "( #{node.next_node.value} ) -> "
-        node = node.next_node
+      current_link = @head
+      string = "( #{current_link.value} ) -> "
+      until current_link.next_node.nil?
+        string += "( #{current_link.next_node.value} ) -> "
+        current_link = current_link.next_node
       end
     end
     string + "nil"
@@ -154,45 +142,45 @@ class LinkedList
 
   def insert_at(value, index)
     # inserts a new node with the provided value at the given index
-    unless @head.nil?
-      index_valid = true
-      i = 0
-      node = @head
+    return puts 'Selected index does not exist' if index > self.size
+    if index.zero?
+      self.prepend(value)
+    elsif index == self.size
+      self.append(value)
+    else
+      previous_link = @head
+      insert_link = @head.next_node
+      i = 1
       until i == index
-        if node.next_node.nil?
-          puts "No such node"
-          index_valid = false
-          break
-        else
-          node = node.next_node
-          i += 1
-        end
+        previous_link = previous_link.next_node
+        insert_link = insert_link.next_node
+        i += 1
       end
-      node.value = value unless index_valid == false
+      subsequent_link = insert_link
+      previous_link.next_node = Node.new(value)
+      insert_link = previous_link.next_node
+      insert_link.next_node = subsequent_link
     end
   end
 
   def remove_at(index)
     # removes the node at the given index
-    unless @head.nil?
-      index_valid = true
-      i = 0
-      prior_node = @head
-      pop_node = @head.next_node
+    return puts 'Selected index does not exist' if index + 1 > self.size
+    if index + 1 == self.size
+      self.pop
+    elsif index.zero?
+      @head = @head.next_node
+    else
+      previous_link = @head
+      remove_link = @head.next_node
+      i = 1
       until i == index
-        if pop_node.next_node.nil?
-          puts "No such node"
-          index_valid = false
-          break
-        else
-          prior_node = prior_node.next_node
-          pop_node = pop_node.next_node
-          i += 1
-        end
+        previous_link = previous_link.next_node
+        remove_link = remove_link.next_node
+        i += 1
       end
-      preceeding_node = pop_node.next_node
-      prior_node.next_node = preceeding_node unless index_valid == false
+      subsequent_link = remove_link.next_node
+      previous_link.next_node = subsequent_link
     end
   end
-
 end
