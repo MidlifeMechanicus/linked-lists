@@ -111,10 +111,31 @@ class LinkedList
       end
     end
     puts contains_valid
+    # refactor puts to returns?
   end
 
   def find(value)
     # returns the index of the node containing value, or nil if not found.
+    contains_valid = false
+    i = 0
+    unless @head.nil?
+      node = @head
+      until node.next_node.nil?
+        if node.value == value
+          contains_valid = true
+          break
+        else
+          node = node.next_node
+          i += 1
+        end
+      end
+    end
+    if contains_valid == true
+      puts i
+    else
+      puts "nil"
+    end
+    # review ruby ternary operators
   end
 
   def to_s

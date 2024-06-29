@@ -16,4 +16,5 @@ list.append(3)
 p list
 
 list.contains?(2)
-list.contains?(10)
+list.find(2)
+list.find(10)
