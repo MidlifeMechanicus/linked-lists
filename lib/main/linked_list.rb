@@ -153,4 +153,30 @@ class LinkedList
     end
   end
 
+  # Extra credit
+
+  def insert_at(value, index)
+    # inserts a new node with the provided value at the given index
+    unless @head.nil?
+      index_valid = true
+      i = 0
+      node = @head
+      until i == index
+        if node.next_node.nil?
+          puts "No such node"
+          index_valid = false
+          break
+        else
+          node = node.next_node
+          i += 1
+        end
+      end
+      node.value = value unless index_valid == false
+    end
+  end
+
+  def remove_at(index)
+    # removes the node at the given index
+  end
+
 end

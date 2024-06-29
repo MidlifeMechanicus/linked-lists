@@ -15,8 +15,6 @@ list.append(3)
 
 p list
 
-list.contains?(2)
-list.find(2)
-list.find(10)
+list.insert_at(10, 1)
 
-list.to_s
+p list
