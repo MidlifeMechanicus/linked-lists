@@ -3,6 +3,8 @@ require_relative "main/node"
 
 list = LinkedList.new
 
+list.at(0)
+
 list.append(1)
 
 list.append(2)
@@ -13,8 +15,6 @@ list.append(3)
 
 p list
 
-list.size
+list.pop
 
-list.at(2)
-
-list.at(10)
+p list
