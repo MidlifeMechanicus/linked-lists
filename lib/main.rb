@@ -18,3 +18,5 @@ p list
 list.contains?(2)
 list.find(2)
 list.find(10)
+
+list.to_s

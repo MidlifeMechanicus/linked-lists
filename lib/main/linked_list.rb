@@ -140,6 +140,17 @@ class LinkedList
 
   def to_s
     # represent your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+    unless @head.nil?
+      node = @head
+      string = "( #{node.value} ) -> "
+      until node.next_node.nil?
+        string = string + "( #{node.next_node.value} ) -> "
+        node = node.next_node
+        # need a better loop condition so that we don't need to bodge aronud final entry
+      end
+      string = string + "nil"
+      puts string
+    end
   end
 
 end
