@@ -9,7 +9,7 @@ class LinkedList
       @head = Node.new(value)
     else
       current = @head
-      while current.next_node !=nil
+      while current.next_node != nil
         current = current.next_node
       end
       current.next_node = Node.new(value)
@@ -18,14 +18,27 @@ class LinkedList
 
   def prepend(value)
     # adds a new node containing value to the start of the list
-    # if @head.nil?
-    #   @head = Node.new(value)
-    # else
-      # Easy enough to create new node; how to get it pointing at current next_node?
+    if @head.nil?
+      @head = Node.new(value)
+    else
+      current = @head
+      @head = Node.new(value)
+      @head.next_node = current
+    end
   end
 
   def size
     # returns the total number of nodes in the list
+    size = 0
+    unless @head.nil?
+      current = @head
+      size = 1
+      while current.next_node != nil
+        current = current.next_node
+        size += 1
+      end
+    end
+    puts size
   end
 
   def head

@@ -3,13 +3,18 @@ require_relative "main/node"
 
 list = LinkedList.new
 
-list.head
-list.tail
-
 list.append(1)
 
 list.append(2)
 
-list.head
+p list
 
-list.tail
+list.prepend(3)
+
+p list
+
+list.append(4)
+
+p list
+
+list.size
